@@ -29,7 +29,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 // Login to harbor and push docker image
-                sh 'docker login harbor.devops.com'
+                sh 'docker login -u devops -p "DevOps@123" harbor.devops.com'
                 sh 'docker tag example_jdk17:$BUILD_NUMBER harbor.devops.com/example-project/example_jdk17:$BUILD_NUMBER'
                 sh 'docker push harbor.devops.com/example-project/example_jdk17:$BUILD_NUMBER'
             }
