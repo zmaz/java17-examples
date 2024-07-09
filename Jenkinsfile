@@ -28,8 +28,8 @@ pipeline {
         }
         stage('Push Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'harbor', passwordVariable: 'harbor-password', usernameVariable: 'harbor-username')]) {
-                    sh 'docker login -u $harbor-username -p $harbor-password harbor.devops.com'
+                withCredentials([usernamePassword(credentialsId: 'harbor', passwordVariable: 'password', usernameVariable: 'username')]) {
+                    sh 'docker login -u $username -p $password harbor.devops.com'
                     sh 'docker tag example_jdk17_master:$BUILD_NUMBER harbor.devops.com/example-project/example_jdk17_master:$BUILD_NUMBER'
                     sh 'docker push harbor.devops.com/example-project/example_jdk17_master:$BUILD_NUMBER'
                 }
