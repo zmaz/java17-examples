@@ -23,15 +23,16 @@ pipeline {
         stage('Docker build') {
             steps {
                 // Docker build 
-                sh 'docker build -t example_jdk17:$BUILD_NUMBER .'
+                sh 'docker build -t example_jdk17_master:$BUILD_NUMBER .'
             }
         }
         stage('Push Docker Image') {
             steps {
-                // Login to harbor and push docker image
-                sh 'docker login -u devops -p "DevOps@123" harbor.devops.com'
-                sh 'docker tag example_jdk17:$BUILD_NUMBER harbor.devops.com/example-project/example_jdk17:$BUILD_NUMBER'
-                sh 'docker push harbor.devops.com/example-project/example_jdk17:$BUILD_NUMBER'
+                withCredentials([usernamePassword(credentialsId: 'harbor', passwordVariable: 'harbor-password', usernameVariable: 'harbor-username')]) {
+                    sh 'docker login -u $harbor-username -p $harbor-password harbor.devops.com'
+                    sh 'docker tag example_jdk17_master:$BUILD_NUMBER harbor.devops.com/example-project/example_jdk17_master:$BUILD_NUMBER'
+                    sh 'docker push harbor.devops.com/example-project/example_jdk17_master:$BUILD_NUMBER'
+                }
             }
         }
     }
@@ -46,6 +47,7 @@ pipeline {
         always { 
             echo "Pipeline executed! Send notification, etc."
             archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+            sh "docker rmi example_jdk17_master:$BUILD_NUMBER"
             cleanWs()
         }
     }
