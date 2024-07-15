@@ -1,9 +1,6 @@
 pipeline {
     agent any  // Runs the pipeline on any available agent (node)
 
-    // random safdsadfasdfasdfasd  dsafasd f
-
-
     stages {
         stage('Checkout') {
             steps {
