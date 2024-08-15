@@ -24,15 +24,15 @@ pipeline {
         stage('Docker build') {
             steps {
                 // Docker build 
-                sh 'docker build -t example_jdk17_master:$BUILD_NUMBER .'
+                sh 'sudo docker build -t example_jdk17_master:$BUILD_NUMBER .'
             }
         }
         stage('Push Docker Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
-                    sh 'docker login -u $username -p $password'
-                    sh 'docker tag example_jdk17_master:$BUILD_NUMBER zmaz/kubernetes-$BRANCH_NAME:$BUILD_NUMBER'
-                    sh 'docker push zmaz/kubernetes-$BRANCH_NAME:$BUILD_NUMBER'
+                    sh 'sudo docker login -u $username -p $password'
+                    sh 'sudo docker tag example_jdk17_master:$BUILD_NUMBER zmaz/kubernetes-$BRANCH_NAME:$BUILD_NUMBER'
+                    sh 'sudo docker push zmaz/kubernetes-$BRANCH_NAME:$BUILD_NUMBER'
                 }
             }
         }
@@ -48,7 +48,7 @@ pipeline {
         always { 
             echo "Pipeline executed! Send notification, etc."
             archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
-            sh "docker rmi example_jdk17_master:$BUILD_NUMBER"
+            sh "sudo docker rmi example_jdk17_master:$BUILD_NUMBER"
             cleanWs()
         }
     }
