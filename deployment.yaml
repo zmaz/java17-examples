@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: full
-        image: zmaz/kubernetes-master:${BUILD_NUMBER}
+        image: zmaz/kubernetes-master:latest
         ports:
         - containerPort: 8080
