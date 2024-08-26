@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-full
+  labels:
+    app: full
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: full
+  template:
+    metadata:
+      labels:
+        app: full
+    spec:
+      containers:
+      - name: full
+        image: zmaz/kubernetes-master:${BUILD_NUMBER}
+        ports:
+        - containerPort: 8080
