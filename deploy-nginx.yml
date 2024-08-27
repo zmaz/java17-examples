@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-full-nginx
+  labels:
+    app: full-nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: full-nginx
+  template:
+    metadata:
+      labels:
+        app: full-nginx
+    spec:
+      containers:
+      - name: full-nginx
+        image: zmaz/nginx-main:latest
+        ports:
+        - containerPort: 80
