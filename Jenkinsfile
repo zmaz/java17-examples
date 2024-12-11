@@ -6,7 +6,7 @@ pipeline {
         KUBECONFIG_CREDENTIAL_ID = 'kubeconfig'  // Jenkins credential ID for kubeconfig file
     }
 
-    stages { /*
+    stages { 
         stage('Checkout') {
             steps {
                 // Checkout code from Git repository
@@ -39,14 +39,15 @@ pipeline {
                     sh 'docker push zmaz/kubernetes-master:$BUILD_NUMBER'
                 }
             }
-        } */
+        } 
         stage('Deploy to Kubernetes') {
             steps {
                 script {
                     withCredentials([file(credentialsId: "${KUBECONFIG_CREDENTIAL_ID}", variable: 'KUBECONFIG')]) {
                         // Deploy the app to Kubernetes
-                        sh 'kubectl get nodes'
-                        //sh 'kubectl apply -f deployment.yaml'
+                        // sh 'kubectl get nodes'
+                        sh 'kubectl apply -f deployment.yaml'
+                        sh 'kubectl apply -f deploy-nginx.yml'
                     }
                 }
             }
