@@ -5,8 +5,8 @@ pipeline {
     environment {
         KUBECONFIG_CREDENTIAL_ID = 'kubeconfig'  // Jenkins credential ID for kubeconfig file
     }
-/*
-    stages {
+
+    stages { /*
         stage('Checkout') {
             steps {
                 // Checkout code from Git repository
@@ -51,7 +51,6 @@ pipeline {
                 }
             }
         }
-
     }
 
     post {
