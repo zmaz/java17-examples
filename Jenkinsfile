@@ -34,8 +34,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
                     sh 'docker login -u $username -p $password'
-                    sh 'docker tag example_jdk17_master:$BUILD_NUMBER zmaz/kubernetes-master:$BUILD_NUMBER'
-                    sh 'docker push zmaz/kubernetes-master:$BUILD_NUMBER'
+                    sh 'docker tag example_jdk17_master:$BUILD_NUMBER zmaz/kubernetes-master:latest'
+                    sh 'docker push zmaz/kubernetes-master:latest'
                 }
             }
         } 
