@@ -44,6 +44,7 @@ pipeline {
                 script {
                     withCredentials([file(credentialsId: "${KUBECONFIG_CREDENTIAL_ID}", variable: 'KUBECONFIG')]) {
                         sh 'kubectl get nodes'
+                        sh 'echo "Deploying pods ..."'
                         sh 'kubectl apply -f deployment.yaml'
                         sh 'kubectl apply -f deploy-nginx.yml'
                     }
